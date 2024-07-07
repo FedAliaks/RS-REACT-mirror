@@ -1,6 +1,7 @@
 import React from 'react';
 import './styles.css';
 import { MovieDescription } from '../../types';
+import axios from 'axios';
 
 /* https://www.omdbapi.com/?apikey=7c372dd6&&type=movie&s=terminator+2 */
 /* https://omdbapi.com/ */
@@ -29,10 +30,22 @@ export default class Header extends React.Component<Props> {
     event.preventDefault();
     console.log('click');
     console.log(this.searchRequest);
+    this.getMoviesArrayFromServer();
   }
 
   setRequestField(event: React.ChangeEvent<HTMLInputElement>) {
     this.searchRequest = event.target.value;
+  }
+
+  async getMoviesArrayFromServer() {
+    const searchField = this.searchRequest.split(' ').join('+');
+    const response = await axios.get(
+      `https://www.omdbapi.com/?apikey=7c372dd6&&type=movie&s=${searchField}`
+    );
+    console.log(response);
+    if (response.data.Response === 'True') {
+      this.props.setMovieArray(response.data.Search);
+    }
   }
 
   render() {
