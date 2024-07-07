@@ -20,6 +20,9 @@ export default class Header extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
     this.searchRequest = localStorage.getItem('requestApi') || '';
+    if (this.searchRequest) {
+      this.getMoviesArrayFromServer();
+    }
 
     // Привязка методов к this
     this.clickBtn = this.clickBtn.bind(this);
@@ -30,6 +33,7 @@ export default class Header extends React.Component<Props> {
     event.preventDefault();
     console.log('click');
     console.log(this.searchRequest);
+    localStorage.setItem('requestApi', this.searchRequest);
     this.getMoviesArrayFromServer();
   }
 
@@ -37,10 +41,10 @@ export default class Header extends React.Component<Props> {
     this.searchRequest = event.target.value;
   }
 
-  async getMoviesArrayFromServer() {
+  async getMoviesArrayFromServer(page: number = 1) {
     const searchField = this.searchRequest.split(' ').join('+');
     const response = await axios.get(
-      `https://www.omdbapi.com/?apikey=7c372dd6&&type=movie&s=${searchField}`
+      `https://www.omdbapi.com/?apikey=7c372dd6&&type=movie&s=${searchField}&page=${page}`
     );
     console.log(response);
     if (response.data.Response === 'True') {

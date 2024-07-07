@@ -31,7 +31,7 @@ export class App extends React.Component<{}, AppState> {
     return (
       <div className="app">
         <Header setMovieArray={this.setMoviesArray} />
-        <div>
+        <div className="movie-section">
           {this.state.moviesArray.map((item, index) => {
             return <MovieCard key={index} movie={item} />;
           })}
