@@ -7,6 +7,7 @@ import { MovieDescription } from './types';
 export type SetMovieArrFunction = (arr: MovieDescription[]) => void;
 export interface AppState {
   moviesArray: MovieDescription[];
+  countResults: number;
 }
 
 export class App extends React.Component<{}, AppState> {
@@ -15,6 +16,7 @@ export class App extends React.Component<{}, AppState> {
     this.setMoviesArray = this.setMoviesArray.bind(this);
     this.state = {
       moviesArray: [] as MovieDescription[],
+      countResults: 0,
     };
   }
 
@@ -28,7 +30,10 @@ export class App extends React.Component<{}, AppState> {
     return (
       <div className="app">
         <Header setMovieArray={this.setMoviesArray} />
-        <Main moviesArray={this.state.moviesArray} />
+        <Main
+          moviesArray={this.state.moviesArray}
+          countResults={this.state.countResults}
+        />
       </div>
     );
   }
