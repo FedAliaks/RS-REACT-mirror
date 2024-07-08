@@ -3,7 +3,6 @@ import './App.css';
 import Header from './components/header/Header';
 import Main from './components/main/Main';
 import { MovieDescription } from './types';
-import MovieCard from './components/movie-card/MovieCard';
 
 export type SetMovieArrFunction = (arr: MovieDescription[]) => void;
 export interface AppState {
@@ -11,8 +10,6 @@ export interface AppState {
 }
 
 export class App extends React.Component<{}, AppState> {
-  /*   moviesArray: MovieDescription[] = []; */
-
   constructor(props: {}) {
     super(props);
     this.setMoviesArray = this.setMoviesArray.bind(this);
@@ -31,12 +28,7 @@ export class App extends React.Component<{}, AppState> {
     return (
       <div className="app">
         <Header setMovieArray={this.setMoviesArray} />
-        <div className="movie-section">
-          {this.state.moviesArray.map((item, index) => {
-            return <MovieCard key={index} movie={item} />;
-          })}
-        </div>
-        {/*         <Main /> */}
+        <Main moviesArray={this.state.moviesArray} />
       </div>
     );
   }
