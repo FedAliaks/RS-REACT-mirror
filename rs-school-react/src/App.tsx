@@ -8,16 +8,25 @@ export type SetMovieArrFunction = (arr: MovieDescription[]) => void;
 export interface AppState {
   moviesArray: MovieDescription[];
   countResults: number;
+  isLoading: boolean;
 }
 
 export class App extends React.Component<{}, AppState> {
   constructor(props: {}) {
     super(props);
     this.setMoviesArray = this.setMoviesArray.bind(this);
+    this.setIsLoading = this.setIsLoading.bind(this);
     this.state = {
       moviesArray: [] as MovieDescription[],
       countResults: 0,
+      isLoading: false,
     };
+  }
+
+  setIsLoading(isLoad: boolean) {
+    console.log('isLoading');
+    console.log(isLoad);
+    this.setState({ isLoading: isLoad });
   }
 
   setMoviesArray(arr: MovieDescription[]) {
@@ -29,11 +38,21 @@ export class App extends React.Component<{}, AppState> {
   render(): React.ReactNode {
     return (
       <div className="app">
-        <Header setMovieArray={this.setMoviesArray} />
-        <Main
-          moviesArray={this.state.moviesArray}
-          countResults={this.state.countResults}
+        <Header
+          setIsLoading={this.setIsLoading}
+          setMovieArray={this.setMoviesArray}
         />
+
+        {!this.state.isLoading ? (
+          <Main
+            moviesArray={this.state.moviesArray}
+            countResults={this.state.countResults}
+          />
+        ) : (
+          <div className="main">
+            <p className="process-msg">in Process</p>
+          </div>
+        )}
       </div>
     );
   }

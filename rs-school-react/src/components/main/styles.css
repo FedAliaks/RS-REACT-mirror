@@ -1,6 +1,8 @@
 .main {
-  background-color: chartreuse;
   flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .button-block {
@@ -9,5 +11,4 @@
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
-  
 }

@@ -10,6 +10,7 @@ export type setMovieArrayType = (arr: MovieDescription[]) => void;
 
 export interface HeaderProps {
   setMovieArray: setMovieArrayType;
+  setIsLoading: (isLoad: boolean) => void;
 }
 
 type Props = Readonly<HeaderProps>;
@@ -42,6 +43,7 @@ export default class Header extends React.Component<Props> {
   }
 
   async getMoviesArrayFromServer(page: number = 1) {
+    this.props.setIsLoading(true);
     const searchField = this.searchRequest.split(' ').join('+');
     const response = await axios.get(
       `https://www.omdbapi.com/?apikey=7c372dd6&&type=movie&s=${searchField}&page=${page}`
@@ -49,7 +51,10 @@ export default class Header extends React.Component<Props> {
     console.log(response);
     if (response.data.Response === 'True') {
       this.props.setMovieArray(response.data.Search);
+    } else {
+      this.props.setMovieArray([]);
     }
+    this.props.setIsLoading(false);
   }
 
   render() {

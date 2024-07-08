@@ -21,7 +21,7 @@ export default class MovieCard extends React.Component<Props> {
           src={
             this.props.movie.Poster !== 'N/A'
               ? this.props.movie.Poster
-              : '/public/No-Image-Placeholder.svg.png'
+              : '/No-Image-Placeholder.svg.png'
           }
           alt="poster"
         />

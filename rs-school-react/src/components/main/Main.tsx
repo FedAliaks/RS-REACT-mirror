@@ -34,25 +34,30 @@ export default class Main extends React.Component<Props, MainState> {
 
   render() {
     return (
-      <div>
-        {this.props.moviesArray.length > 1} ?
-        <div className="movie-section">
-          {this.props.moviesArray.map((item, index) => {
-            return <MovieCard key={index} movie={item} />;
-          })}
-        </div>
-        <div className="button-block">
-          <ButtonMain
-            content="Prev page"
-            isActive={true}
-            clickHandler={this.clickPrevPage}
-          />
-          <ButtonMain
-            content="Next page"
-            isActive={false}
-            clickHandler={this.clickNextPage}
-          />
-        </div>
+      <div className="main">
+        {this.props.moviesArray.length ? (
+          <div>
+            <div className="movie-section">
+              {this.props.moviesArray.map((item, index) => {
+                return <MovieCard key={index} movie={item} />;
+              })}
+            </div>
+            <div className="button-block">
+              <ButtonMain
+                content="Prev page"
+                isActive={true}
+                clickHandler={this.clickPrevPage}
+              />
+              <ButtonMain
+                content="Next page"
+                isActive={false}
+                clickHandler={this.clickNextPage}
+              />
+            </div>
+          </div>
+        ) : (
+          <p className="empty-msg">Unfortunately, nothing was found.</p>
+        )}
       </div>
     );
   }
