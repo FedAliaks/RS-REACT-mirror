@@ -25,7 +25,6 @@ export default class Header extends React.Component<Props> {
       this.getMoviesArrayFromServer();
     }
 
-    // Привязка методов к this
     this.clickBtn = this.clickBtn.bind(this);
     this.setRequestField = this.setRequestField.bind(this);
   }
@@ -57,16 +56,25 @@ export default class Header extends React.Component<Props> {
     this.props.setIsLoading(false);
   }
 
+  throwErr() {
+    console.log('throw error');
+  }
+
   render() {
+    /*     if(this.state.hasError) throw new Error('errorasdfsadfasdf') */
     return (
       <header className="header">
-        <form>
+        <button className="header-button" onClick={this.throwErr}>
+          Error
+        </button>
+        <form className="header-form">
           <input
             type="text"
             placeholder={this.searchRequest}
             onChange={this.setRequestField}
+            className="header-input"
           ></input>
-          <button className="header__button" onClick={this.clickBtn}>
+          <button className="header-button" onClick={this.clickBtn}>
             Search
           </button>
         </form>
