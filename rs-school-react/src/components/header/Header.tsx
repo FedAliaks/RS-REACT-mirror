@@ -24,7 +24,7 @@ export default class Header extends React.Component<Props, HeaderState> {
 
   constructor(props: Props) {
     super(props);
-    this.searchRequest = localStorage.getItem('requestApi') || '';
+    this.searchRequest = localStorage.getItem('requestApi') || 'all';
     if (this.searchRequest) {
       this.getMoviesArrayFromServer();
     }
