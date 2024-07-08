@@ -9,8 +9,29 @@ export interface MainProps {
   countResults: number;
 }
 
+export interface MainState {
+  nextPage: boolean;
+  prevPage: boolean;
+}
+
 type Props = Readonly<MainProps>;
-export default class Main extends React.Component<Props> {
+export default class Main extends React.Component<Props, MainState> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      nextPage: true,
+      prevPage: true,
+    };
+  }
+
+  clickNextPage() {
+    console.log('click next');
+  }
+
+  clickPrevPage() {
+    console.log('click prev');
+  }
+
   render() {
     return (
       <div>
@@ -20,8 +41,18 @@ export default class Main extends React.Component<Props> {
             return <MovieCard key={index} movie={item} />;
           })}
         </div>
-        <ButtonMain content="Prev page" isActive={true} />
-        <ButtonMain content="Next page" isActive={false} />
+        <div className="button-block">
+          <ButtonMain
+            content="Prev page"
+            isActive={true}
+            clickHandler={this.clickPrevPage}
+          />
+          <ButtonMain
+            content="Next page"
+            isActive={false}
+            clickHandler={this.clickNextPage}
+          />
+        </div>
       </div>
     );
   }
