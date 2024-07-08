@@ -15,7 +15,11 @@ export interface HeaderProps {
 
 type Props = Readonly<HeaderProps>;
 
-export default class Header extends React.Component<Props> {
+interface HeaderState {
+  throwError: boolean;
+}
+
+export default class Header extends React.Component<Props, HeaderState> {
   searchRequest: string;
 
   constructor(props: Props) {
@@ -25,14 +29,15 @@ export default class Header extends React.Component<Props> {
       this.getMoviesArrayFromServer();
     }
 
+    this.state = { throwError: false };
+
     this.clickBtn = this.clickBtn.bind(this);
     this.setRequestField = this.setRequestField.bind(this);
+    this.throwErr = this.throwErr.bind(this);
   }
 
   clickBtn(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
-    console.log('click');
-    console.log(this.searchRequest);
     localStorage.setItem('requestApi', this.searchRequest);
     this.getMoviesArrayFromServer();
   }
@@ -47,7 +52,6 @@ export default class Header extends React.Component<Props> {
     const response = await axios.get(
       `https://www.omdbapi.com/?apikey=7c372dd6&&type=movie&s=${searchField}&page=${page}`
     );
-    console.log(response);
     if (response.data.Response === 'True') {
       this.props.setMovieArray(response.data.Search);
     } else {
@@ -57,11 +61,13 @@ export default class Header extends React.Component<Props> {
   }
 
   throwErr() {
-    console.log('throw error');
+    this.setState({ throwError: true });
   }
 
   render() {
-    /*     if(this.state.hasError) throw new Error('errorasdfsadfasdf') */
+    if (this.state.throwError) {
+      throw new Error('Ошибка по клику на кнопку!');
+    }
     return (
       <header className="header">
         <button className="header-button" onClick={this.throwErr}>

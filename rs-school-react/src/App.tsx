@@ -24,15 +24,11 @@ export class App extends React.Component<{}, AppState> {
   }
 
   setIsLoading(isLoad: boolean) {
-    console.log('isLoading');
-    console.log(isLoad);
     this.setState({ isLoading: isLoad });
   }
 
   setMoviesArray(arr: MovieDescription[]) {
     this.setState({ moviesArray: arr });
-    console.log('state');
-    console.log(this.state.moviesArray);
   }
 
   render(): React.ReactNode {

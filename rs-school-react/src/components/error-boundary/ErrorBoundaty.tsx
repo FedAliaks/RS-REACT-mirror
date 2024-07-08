@@ -23,15 +23,11 @@ export default class MyErrorBoundary extends React.Component<Props, State> {
   }
 
   componentDidCatch(error: Error, info: ErrorInfo) {
-    console.log(123);
     console.error('Error: ', error, info);
   }
 
   render() {
     if (this.state.hasError) {
-      {
-        console.log('here');
-      }
       return <Fallback />;
     }
 
