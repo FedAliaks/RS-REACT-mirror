@@ -19,12 +19,14 @@ export default function App() {
   const [mainComponent, setMainComponent] = useState<JSX.Element | null>(null);
 
   useEffect(() => {
+    console.log('useEffect1');
     setMainComponent(
       <Main moviesArray={moviesArray} countResults={countResults} />
     );
   }, [moviesArray, countResults]);
 
   useEffect(() => {
+    console.log('useEffect2');
     if (isLoading) {
       setInProcess(
         <div className="main">
@@ -39,6 +41,7 @@ export default function App() {
   return (
     <div className="app">
       <Header setIsLoading={setIsLoading} setMovieArray={setMoviesArray} />
+
       <div>
         {mainComponent}
 

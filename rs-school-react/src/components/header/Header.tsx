@@ -13,78 +13,47 @@ export interface HeaderProps {
   setIsLoading: (isLoad: boolean) => void;
 }
 
-type Props = Readonly<HeaderProps>;
+export default function Header(props: HeaderProps) {
+  const { setMovieArray, setIsLoading } = props;
+  let searchRequest = localStorage.getItem('requestApi') || 'all';
 
-interface HeaderState {
-  throwError: boolean;
-}
-
-export default class Header extends React.Component<Props, HeaderState> {
-  searchRequest: string;
-
-  constructor(props: Props) {
-    super(props);
-    this.searchRequest = localStorage.getItem('requestApi') || 'all';
-    if (this.searchRequest) {
-      this.getMoviesArrayFromServer();
-    }
-
-    this.state = { throwError: false };
-
-    this.clickBtn = this.clickBtn.bind(this);
-    this.setRequestField = this.setRequestField.bind(this);
-    this.throwErr = this.throwErr.bind(this);
+  function setRequestField(event: React.ChangeEvent<HTMLInputElement>) {
+    searchRequest = event.target.value;
   }
 
-  clickBtn(event: React.MouseEvent<HTMLButtonElement>) {
+  function clickBtn(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
-    localStorage.setItem('requestApi', this.searchRequest);
-    this.getMoviesArrayFromServer();
+    localStorage.setItem('requestApi', searchRequest);
+    getMoviesArrayFromServer();
   }
 
-  setRequestField(event: React.ChangeEvent<HTMLInputElement>) {
-    this.searchRequest = event.target.value;
-  }
-
-  async getMoviesArrayFromServer(page: number = 1) {
-    this.props.setIsLoading(true);
-    const searchField = this.searchRequest.split(' ').join('+');
+  async function getMoviesArrayFromServer(page: number = 1) {
+    setIsLoading(true);
+    const searchField = searchRequest.split(' ').join('+');
     const response = await axios.get(
       `https://www.omdbapi.com/?apikey=7c372dd6&&type=movie&s=${searchField}&page=${page}`
     );
     if (response.data.Response === 'True') {
-      this.props.setMovieArray(response.data.Search);
+      setMovieArray(response.data.Search);
     } else {
-      this.props.setMovieArray([]);
+      setMovieArray([]);
     }
-    this.props.setIsLoading(false);
+    setIsLoading(false);
   }
 
-  throwErr() {
-    this.setState({ throwError: true });
-  }
-
-  render() {
-    if (this.state.throwError) {
-      throw new Error('Ошибка по клику на кнопку!');
-    }
-    return (
-      <header className="header">
-        <button className="header-button" onClick={this.throwErr}>
-          Error
+  return (
+    <header className="header">
+      <form className="header-form">
+        <input
+          type="text"
+          placeholder={searchRequest}
+          onChange={setRequestField}
+          className="header-input"
+        ></input>
+        <button className="header-button" onClick={clickBtn}>
+          Search
         </button>
-        <form className="header-form">
-          <input
-            type="text"
-            placeholder={this.searchRequest}
-            onChange={this.setRequestField}
-            className="header-input"
-          ></input>
-          <button className="header-button" onClick={this.clickBtn}>
-            Search
-          </button>
-        </form>
-      </header>
-    );
-  }
+      </form>
+    </header>
+  );
 }
