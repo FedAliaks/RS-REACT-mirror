@@ -9,13 +9,45 @@ export interface MainProps {
   countResults: number;
 }
 
-export interface MainState {
-  nextPage: boolean;
-  prevPage: boolean;
+export default function Main(props: MainProps) {
+  const clickNextPage = () => {
+    console.log('click next');
+  };
+
+  const clickPrevPage = () => {
+    console.log('click prev');
+  };
+
+  return (
+    <div className="main">
+      {props.moviesArray.length ? (
+        <div>
+          <div className="movie-section">
+            {props.moviesArray.map((item, index) => {
+              return <MovieCard key={index} movie={item} />;
+            })}
+          </div>
+          <div className="button-block">
+            <ButtonMain
+              content="Prev page"
+              isActive={true}
+              clickHandler={clickPrevPage}
+            />
+            <ButtonMain
+              content="Next page"
+              isActive={false}
+              clickHandler={clickNextPage}
+            />
+          </div>
+        </div>
+      ) : (
+        <p className="empty-msg">Unfortunately, nothing was found.</p>
+      )}
+    </div>
+  );
 }
 
-type Props = Readonly<MainProps>;
-export default class Main extends React.Component<Props, MainState> {
+/* export default class Main extends React.Component<Props, MainState> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -61,4 +93,4 @@ export default class Main extends React.Component<Props, MainState> {
       </div>
     );
   }
-}
+} */

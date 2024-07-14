@@ -7,7 +7,19 @@ export interface ButtonMainProps {
   clickHandler: () => void;
 }
 
-type Props = Readonly<ButtonMainProps>;
+export default function ButtonMain(props: ButtonMainProps) {
+  return (
+    <button
+      disabled={!props.isActive}
+      className={'button'}
+      onClick={props.clickHandler}
+    >
+      {props.content}
+    </button>
+  );
+}
+
+/* type Props = Readonly<ButtonMainProps>;
 
 export default class ButtonMain extends React.Component<Props> {
   render() {
@@ -21,4 +33,4 @@ export default class ButtonMain extends React.Component<Props> {
       </button>
     );
   }
-}
+} */
