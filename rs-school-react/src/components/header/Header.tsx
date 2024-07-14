@@ -11,14 +11,16 @@ export type setMovieArrayType = (arr: MovieDescription[]) => void;
 export interface HeaderProps {
   setMovieArray: setMovieArrayType;
   setIsLoading: (isLoad: boolean) => void;
+  setSearchRequest: React.Dispatch<React.SetStateAction<string>>;
+  searchRequest: string;
 }
 
 export default function Header(props: HeaderProps) {
-  const { setMovieArray, setIsLoading } = props;
-  let searchRequest = localStorage.getItem('requestApi') || 'all';
+  const { setMovieArray, setIsLoading, searchRequest, setSearchRequest } =
+    props;
 
   function setRequestField(event: React.ChangeEvent<HTMLInputElement>) {
-    searchRequest = event.target.value;
+    setSearchRequest(event.target.value);
   }
 
   function clickBtn(event: React.MouseEvent<HTMLButtonElement>) {

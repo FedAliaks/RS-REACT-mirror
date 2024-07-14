@@ -17,6 +17,9 @@ export default function App() {
   const [countResults] = useState(0);
   const [inProcess, setInProcess] = useState<JSX.Element | null>(null);
   const [mainComponent, setMainComponent] = useState<JSX.Element | null>(null);
+  const [searchRequest, setSearchRequest] = useState(
+    localStorage.getItem('requestApi') || 'all'
+  );
 
   useEffect(() => {
     console.log('useEffect1');
@@ -40,7 +43,12 @@ export default function App() {
 
   return (
     <div className="app">
-      <Header setIsLoading={setIsLoading} setMovieArray={setMoviesArray} />
+      <Header
+        setIsLoading={setIsLoading}
+        setMovieArray={setMoviesArray}
+        searchRequest={searchRequest}
+        setSearchRequest={setSearchRequest}
+      />
 
       <div>
         {mainComponent}
