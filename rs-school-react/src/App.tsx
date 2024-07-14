@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import Header from './components/header/Header';
 import Main from './components/main/Main';
@@ -11,7 +11,44 @@ export interface AppState {
   isLoading: boolean;
 }
 
-export class App extends React.Component<{}, AppState> {
+export default function App() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [moviesArray, setMoviesArray] = useState<MovieDescription[]>([]);
+  const [countResults] = useState(0);
+  const [inProcess, setInProcess] = useState<JSX.Element | null>(null);
+  const [mainComponent, setMainComponent] = useState<JSX.Element | null>(null);
+
+  useEffect(() => {
+    setMainComponent(
+      <Main moviesArray={moviesArray} countResults={countResults} />
+    );
+  }, [moviesArray, countResults]);
+
+  useEffect(() => {
+    if (isLoading) {
+      setInProcess(
+        <div className="main">
+          <p className="process-msg">in Process</p>
+        </div>
+      );
+    } else {
+      setInProcess(null);
+    }
+  }, [isLoading]);
+
+  return (
+    <div className="app">
+      <Header setIsLoading={setIsLoading} setMovieArray={setMoviesArray} />
+      <div>
+        {mainComponent}
+
+        {inProcess}
+      </div>
+    </div>
+  );
+}
+
+/* export class App extends React.Component<{}, AppState> {
   constructor(props: {}) {
     super(props);
     this.setMoviesArray = this.setMoviesArray.bind(this);
@@ -55,3 +92,4 @@ export class App extends React.Component<{}, AppState> {
 }
 
 export default App;
+ */

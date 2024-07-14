@@ -1,4 +1,3 @@
-import React from 'react';
 import './styles.css';
 
 export interface ButtonMainProps {
@@ -18,19 +17,3 @@ export default function ButtonMain(props: ButtonMainProps) {
     </button>
   );
 }
-
-/* type Props = Readonly<ButtonMainProps>;
-
-export default class ButtonMain extends React.Component<Props> {
-  render() {
-    return (
-      <button
-        disabled={!this.props.isActive}
-        className={'button'}
-        onClick={this.props.clickHandler}
-      >
-        {this.props.content}
-      </button>
-    );
-  }
-} */

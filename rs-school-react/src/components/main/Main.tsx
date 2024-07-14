@@ -1,4 +1,3 @@
-import React from 'react';
 import './styles.css';
 import { MovieDescription } from '../../types';
 import MovieCard from '../movie-card/MovieCard';
